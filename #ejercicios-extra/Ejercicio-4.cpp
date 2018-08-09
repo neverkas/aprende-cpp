@@ -1,74 +1,90 @@
 /*
-Código de barras. Un sistema de gestión de logística debe almacenar en memoria los códigos de
-barra de los paquetes a medida que son leídos por un scanner. El líder técnico determinó que la
-mejor estructura para este caso sería una matriz bidimensional que almacene hasta 100 códigos.
-Como se desea que no haya repetición de datos, el array también almacenará la cantidad de lecturas
-sobre un mismo código, como se muestra en este ejemplo:
-
-Se p​ ide: Crear la función nuevaLectura() que recibirá por parámetro: la matriz, el valor del índice al
-próximo elemento y el nuevo código a ingresar. Si el array no tiene más capacidad, deberá retornar el
-valor ‘-1’. También se deberá crear la definición de la función validar() que buscará lecturas erróneas
-(identificadas con el código de valor ‘0’) y en cuyo caso se deberá eliminar la fila desplazando las
-siguientes de modo tal que no queden elementos vacíos intermedios (sólo podrá haber una fila con
-error). Por último, también se pide implementar la función ordenar() para ordenar las filas de la
-matriz ascendentemente por la columna ‘cantidad’.
-*/
+ * 
+ * Crear un programa que permita calcular a partir de un solo dato de dimensión en
+ * centímetros, el área de: un círculo, un cuadrado, un triángulo (equilátero)
+ * Cada cálculo deberá ser ejecutado por funciones sobrecargadas, con las
+ * siguientes firmas:
+ * float calcularArea (float);
+ * float calcularArea (float,float);
+ * float calcularArea (char,float,float);
+ * Donde el compilador distinguirá a la función que calcula el área del triángulo
+ * cuando reciba el símbolo ‘t’ como parámetro. Solicitar el dato por consola, invocar
+ * las 3 funciones y mostrar los 3 resultados desde la función principal.
+ *   
+ * Ejecutar las funciones de cálculo desde un menú de opciones.
+ * El menú estará disponible hasta que el usuario seleccione una opción predeterminada para finalizar el programa.
+ * También se deberá agregar la función imprimir() que reciba por referencia el
+ * resultado del cálculo (tanto enteros como decimales) y por valor la leyenda
+ * correspondiente. Está función se deberá invocar inmediatamente luego de realizar
+ * el cálculo seleccionado por el usuario
+ * 
+ */
 
 #include <iostream>
-#include <cstdio>
-
-const int MATRIZ_FILAS = 3;
-const int MATRIZ_COLUMNAS = 2;
-const int CODIGOS_CANTIDAD = 2;
+#include <string>
 
 using namespace std;
+using std::string;
 
-// prototipos
-void nuevaLectura(int [MATRIZ_FILAS][MATRIZ_COLUMNAS], int, int);
-void mostrar(int [MATRIZ_FILAS][MATRIZ_COLUMNAS]);
-//void validar(int [MATRIZ_FILAS][MATRIZ_COLUMNAS]);
-//void ordenar();
+float calcularArea(float dato){
+	return (3.14 * dato);
+}
+
+float calcularArea(float dato1, float dato2){
+	return (dato1 * dato2);
+}
+
+float calcularArea(char dato1, float dato2, float dato3){
+		return ((dato1 * dato2) / 2);
+}
+
+template <typename t> void imprimir(t &resultado, string figura){
+	cout << "El area del " << figura << " es " << resultado << endl;
+}
 
 int main(){
-	int matriz[MATRIZ_FILAS][MATRIZ_COLUMNAS];
+	float dato, resultado;
+	int opcion;
+	string figura;
 
-	for(int i=0; i<MATRIZ_FILAS; i++){
-		cout << "Codigo: ";
-		cin >> matriz[i][0];
+	cout << "Menu de opciones: " << endl;
+	cout << "1: para circulo" << endl;
+	cout << "2: para cuadrado" << endl;
+	cout << "3: para triangulo" << endl;
+	cout << "4: para finalizar" << endl;
+	cin >> opcion;		
+			
+	while(opcion < 4){
+		
+		cout << "Ingrese el dato: ";
+		cin >> dato;
+		
+		switch(opcion){
+			case 1:  // circulo
+				resultado = calcularArea(dato);
+				figura = "Circulo";
+			break;
+			case 2:  //cuadrado
+				resultado = calcularArea(dato, dato);
+				figura = "Cuadrado";
+			break;
+			case 3:  //triangulo
+				resultado = calcularArea('t', dato, dato);
+				figura = "Triangulo";
+			break;
+		}
+		
+		imprimir <float> (resultado, figura);
 
-		cout << "Cantidad: ";
-		cin >> matriz[i][1];
+		cout << "Menu de opciones: " << endl;
+		cout << "1: para circulo" << endl;
+		cout << "2: para cuadrado" << endl;
+		cout << "3: para triangulo" << endl;
+		cout << "4: para finalizar" << endl;
+		cin >> opcion;		
+
+		
 	}
 	
-	for(int i=0; i<=CODIGOS_CANTIDAD; i++){
-		printf("Codigo: %i , Cantidad: %i \n", matriz[i][0], matriz[i][1]);
-	}
-	
-	/*
-	for(int i=0; i < CODIGOS_CANTIDAD; i++){	
-		cout << "Codigo: ";
-		cin >> codigo;
-
-		cout << "Cantidad: ";
-		cin >> cantidad;
-
-		nuevaLectura(matriz, codigo, cantidad);
-	}
-	
-	
-	mostrar(matriz);
-	*/
 	return 0;
-}
-	//for(int i=0; i < CODIGOS_CANTIDAD; i++){
-
-void mostrar(int matriz[MATRIZ_FILAS][MATRIZ_COLUMNAS]){
-	for(int i=0; i<CODIGOS_CANTIDAD; i++){
-		printf("Codigo: %i , Cantidad: %i \n", matriz[i][0], matriz[i][1]);
-	}
-}
-
-void nuevaLectura(int matriz[MATRIZ_FILAS][MATRIZ_COLUMNAS], int codigo, int cantidad){
-		matriz[codigo][0] = codigo;
-		matriz[codigo][1] = cantidad; 
 }

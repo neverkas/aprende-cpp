@@ -1,232 +1,222 @@
-#include <stdio.h>
+/*
+ * Crear un programa que gestione una matriz de enteros de 4 x 3, permita ingresar
+ * todos sus elementos por consola y ofrezca las siguientes operaciones a partir de
+ * estas funciones:
+ * mostrarMatriz(), sumarFilas(), mayorPorFila(), menorPorFila()
+ * 
+ * Las funciones recibiran por parametro la referencia a la matriz y mostrarán por 
+ * pantalla los resultados por fila. Permitir al usuario seleccionar operaciones a
+ * través de un menú de opciones. 
+ * 
+ * main() deberá permitir ingresar valores a los elementos de la matriz
+ * Cuando el usuario seleccione las opciones "Mayor por fila" o "Menor por fila", main() invocara a
+ * esas funciones que recibiran la matriz y convertiran las filas en vectores (1 dimension) de forma tal
+ * de utilizar las funciones ya desarrolladas que localizan maximo y minimo en un array
+ * unidimensional. Ejemplo:
+ * > carga valores a la matriz
+ * > muestra las opciones
+ * > invoca a la funciones (que reciben matriz[][])
+ * 
+ * Maximo
+ * > recibe un array unidimensional y retorna la posicion del elemento con el mayor valor
+ * 
+ */
 #include <iostream>
-#include <cstring>
+#include <iomanip>
 
 using namespace std;
 
-// STRUCTS
-struct Equipo{
-	int bolillero;
-	char nombre[30];
-	char confederacion[30];
-	char grupo;
-};
+//
+// # Variables Globales
+// 
+const int MATRIZ_FILAS = 4;
+const int MATRIZ_COLUMNAS = 3;
 
-// VARIABLES GLOBALES
-const int EQUIPOS = 4;
-const int GRUPOS = 8;
-const int EQUIPOS_TOTAL = (GRUPOS*EQUIPOS);
-char GRUPO_ARGENTINA, GRUPO_BRASIL; // se reutiliza en sortear_bolillero_2()
-char ARCHIVO_EQUIPOS_CLASIFICADOS[30] = "equipos-clasificados.dat";
+// 
+// # Prototipos
+// 
+void cargarMatriz(int [MATRIZ_COLUMNAS][MATRIZ_COLUMNAS]);
+void mostrarMatriz(int [MATRIZ_FILAS][MATRIZ_COLUMNAS]);
+void sumarFilas(int [MATRIZ_FILAS][MATRIZ_COLUMNAS]);
+void menorPorFila(int [MATRIZ_FILAS][MATRIZ_COLUMNAS]);
+void mayorPorFila(int [MATRIZ_FILAS][MATRIZ_COLUMNAS]);
+void menu(int [MATRIZ_FILAS][MATRIZ_COLUMNAS]);
 
-// PROTOTIPOS
-Equipo cargar_equipo(FILE *, const char []);
-Equipo cargar_equipos();
-Equipo listado_equipos();
-Equipo agregar_equipo_al_grupo(Equipo, char);
+int maximo(int [], int);
+int minimo(int [], int);
 
-void crear_archivos_por_grupo();
-void sortear_fase_grupos();
-void sortear_bolillero(int);
-void sortear_bolillero_1(Equipo);
-void sortear_bolillero_2(Equipo);
+/*********************************************************************/
 
-char letra_random(char [], int &);
-
-// MAIN
+//
+// # Main
+//
 int main(){
-	srand(time(NULL));
-	crear_archivos_por_grupo();
-	cargar_equipos();
-	sortear_fase_grupos();
-	listado_equipos();
-
-   return 0;
+	int matriz[MATRIZ_COLUMNAS][MATRIZ_COLUMNAS];	
+		
+	cargarMatriz(matriz);		
+	menu(matriz);	
 }
 
-// FUNCIONES
-void crear_archivos_por_grupo(){
-    char nombreArchivo[30];
-    
-    for(int i=0; i<8; i++){
-        sprintf(nombreArchivo, "grupo_%c", 'A'+i);
-        FILE *archivo = fopen(nombreArchivo, "wb");
-        
-        fclose(archivo);
-    }
-}
+/*********************************************************************/
 
-char letra_random(char letras[], int &letras_cant){
-	int x = rand() % letras_cant;
-	char letra = letras[x];
-
-	for(int i=x; i<letras_cant-1; i++)
-		letras[i]=letras[i+1];
+//
+// # Funciones
+//
+void cargarMatriz(int matriz[MATRIZ_COLUMNAS][MATRIZ_COLUMNAS]){
+	cout << "Cargar valores a la matriz:" << endl;
 	
-	letras_cant--;
-	
-	return letra;
-}
-
-Equipo cargar_equipo(FILE *archivo, int bolillero, const char nombre[], const char confederacion[]){
-    Equipo equipo;
-	equipo.bolillero = bolillero;
-	strcpy(equipo.nombre, nombre);
-	strcpy(equipo.confederacion, confederacion);
-    fwrite(&equipo, sizeof(Equipo), 1, archivo);
-}
-
-Equipo cargar_equipos(){
-    FILE *archivo = fopen(ARCHIVO_EQUIPOS_CLASIFICADOS, "wb");
-	int bolillero;
-
-	// Bolillero 1
-	bolillero = 1;
-	cargar_equipo(archivo, bolillero, "Rusia", "CAF");
-	cargar_equipo(archivo, bolillero, "Alemania", "CAF");
-	cargar_equipo(archivo, bolillero, "Brasil", "CONMEBOL");
-	cargar_equipo(archivo, bolillero, "Portugal", "CAF");
-	cargar_equipo(archivo, bolillero, "Argentina", "CONMEBOL");
-	cargar_equipo(archivo, bolillero, "Belgica", "CAF");
-	cargar_equipo(archivo, bolillero, "Polonia", "CAF");
-	cargar_equipo(archivo, bolillero, "Francia", "CAF");
-	
-	// Bolillero 2
-	bolillero = 2;
-	cargar_equipo(archivo, bolillero, "Espania", "CAF");
-	cargar_equipo(archivo, bolillero, "Peru", "CONMEBOL");
-	cargar_equipo(archivo, bolillero, "Suiza", "CAF");
-	cargar_equipo(archivo, bolillero, "Inglaterra", "CAF");
-	cargar_equipo(archivo, bolillero, "Colombia", "CONMEBOL");
-	cargar_equipo(archivo, bolillero, "Mexico", "CONMEBOL");
-	cargar_equipo(archivo, bolillero, "Uruguay", "CONMEBOL");
-	cargar_equipo(archivo, bolillero, "Croacia", "CAF");
-
-	// Bolillero 3	
-	bolillero = 3;
-	cargar_equipo(archivo, bolillero, "Dinamarca", "CAF");
-	cargar_equipo(archivo, bolillero, "Islandia", "CAF");
-	cargar_equipo(archivo, bolillero, "Costa Rica", "CAF");
-	cargar_equipo(archivo, bolillero, "Suecia", "CAF");
-	cargar_equipo(archivo, bolillero, "Tunez", "CAF");
-	cargar_equipo(archivo, bolillero, "Egipto", "CAF");
-	cargar_equipo(archivo, bolillero, "Senegal", "CAF");
-	cargar_equipo(archivo, bolillero, "Iran", "CAF");
-	
-	// Bolillero 4
-	bolillero = 4;
-	cargar_equipo(archivo, bolillero, "Serbia", "CAF");
-	cargar_equipo(archivo, bolillero, "Nigeria", "CAF");
-	cargar_equipo(archivo, bolillero, "Australia", "CAF");
-	cargar_equipo(archivo, bolillero, "Japon", "CAF");
-	cargar_equipo(archivo, bolillero, "Marruecos", "CAF");
-	cargar_equipo(archivo, bolillero, "Panama", "CAF");
-	cargar_equipo(archivo, bolillero, "Corea del Sur", "CAF");
-	cargar_equipo(archivo, bolillero, "Arabia Saudita", "CAF");
-
-    fclose(archivo);
-}
-
-
-void sortear_fase_grupos(){
-	char sortear_respuesta;
-	
-	cout<<"Sortear Fase de grupos? S/N: ";
-	cin>>sortear_respuesta;
-	
-	if(sortear_respuesta == 'S' || sortear_respuesta == 's'){
-		sortear_bolillero(1);
-		sortear_bolillero(2);
+	// Cargar valores a la matriz
+	for (int fila = 0; fila < MATRIZ_FILAS; fila++){
+		for (int col = 0; col < MATRIZ_COLUMNAS; col++){
+			// Solicita el valor que ira 
+			cout<<"Valor["<<fila<<"]["<<col<<"]:";
+			cin >> matriz[fila][col];
+		}
 	}
 }
 
-void sortear_bolillero(int bolillero){
-	FILE *archivo;
-	Equipo equipo;
+void menu(int matriz[MATRIZ_COLUMNAS][MATRIZ_COLUMNAS]){
+	int opcion;
+	cout << "MENU DE OPCIONES" << endl;
 	
-	archivo = fopen(ARCHIVO_EQUIPOS_CLASIFICADOS, "r+b");	
-    fread(&equipo, sizeof(Equipo), 1, archivo);
-        while(!feof(archivo)){	
-		    if(equipo.bolillero == bolillero){
-    			switch(bolillero){
-    			case 1:
-    				sortear_bolillero_1(equipo);				
-    				break;
-    			case 2:
-    				sortear_bolillero_2(equipo);						
-    				break;
-    			case 3: case 4:
-    				//sortear_bolillero_3(equipo);						
-    				break;
-    			} // end switch
-		    } // end if
+	cout << "\t0: Salir" << endl;
+	cout << "\t1: Mostrar matriz" << endl;
+	cout << "\t2: Sumar Filas" << endl;
+	cout << "\t3: Menor por fila" << endl;
+	cout << "\t4: Mayor por fila" << endl;
 
-        fread(&equipo, sizeof(Equipo), 1, archivo);
-	} // endwhile
-	fclose(archivo);
+	cout << "Opcion: ";
+	cin >> opcion;
+	
+	// Bucle controlado por centinela que es 'opcion'
+	// sigue iterando mientras 'opcion' sea distinto a cero
+	while(opcion != 0){				
+		switch(opcion){
+			case 1:
+				mostrarMatriz(matriz);
+			break;
+			case 2:
+				sumarFilas(matriz);
+			break;
+			case 3:
+				menorPorFila(matriz);
+			break;
+			case 4:
+				mayorPorFila(matriz);
+			break;
+			} // end switch		 		 
+			cout << endl;
+			 
+		cout << "Opcion: ";
+		cin >> opcion;
+	 } // end while
 }
 
-Equipo agregar_equipo_al_grupo(Equipo equipo, char grupo){
-    char nombreArchivo[30];
-    
-    sprintf(nombreArchivo, "grupo_%c", grupo);
-    FILE *archivo = fopen(nombreArchivo, "wb");
-    fwrite(&equipo, sizeof(Equipo), 1, archivo);
-    fclose(archivo);
-}
-
-void sortear_bolillero_1(Equipo equipo){
-    int posicion;
-	int letras_cant = 7;
-	char letra, letras[] = {'B','C','D','E','F','G','H'};
-	
-	string nombre = string(equipo.nombre);
-
-	if(nombre == "Rusia")					
-		equipo.grupo = 'A';
-	else{
-		letra=letra_random(letras, letras_cant);					
-		equipo.grupo = letra;
-
-		if(nombre == "Argentina")
-			GRUPO_ARGENTINA = letra;
-		if(nombre == "Brasil")
-			GRUPO_BRASIL = letra;
-	} // endif
-	// agrego los registros a los archivos
-	agregar_equipo_al_grupo(equipo, equipo.grupo);
-
-	//printf("%s %c\n", equipo.nombre, equipo.grupo);
-
-}
-void sortear_bolillero_2(Equipo equipo){
-	int letras_cant = 8;
-	char letra, letras[] = {'A', 'B','C','D','E','F','G','H'};
-	
-	string confederacion = string(equipo.confederacion);
-
-	letra=letra_random(letras, letras_cant);
-	equipo.grupo = letra;
-
-	if(confederacion == "CAF"){
-		// si coincide que se repita
-		while(letra == GRUPO_ARGENTINA || letra == GRUPO_BRASIL){
-			letra=letra_random(letras, letras_cant);					
-			equipo.grupo = letra;
-		} // endwhile
+void mostrarMatriz(int matriz[MATRIZ_FILAS][MATRIZ_COLUMNAS]){
+	// Recorro las filas
+	for (int fila = 0; fila < MATRIZ_FILAS; fila++){
+		// Recorro las columnas
+		for (int col = 0; col < MATRIZ_COLUMNAS; col++){
+			cout << setw(2) << matriz[fila][col] << " ";
+		}
+		
+		cout<<endl;
 	}
 }
 
-Equipo listado_equipos(){
-    FILE *archivo = fopen(ARCHIVO_EQUIPOS_CLASIFICADOS, "rb");
-    
-    Equipo equipo;
-    fread(&equipo, sizeof(Equipo), 1, archivo);
-    while(!feof(archivo)){
-		printf("%i %s %s\n", equipo.bolillero, equipo.nombre, equipo.confederacion);
-        fread(&equipo, sizeof(Equipo), 1, archivo);
-    }
-    cout<<endl;
-    
-    fclose(archivo);
+void sumarFilas(int matriz[MATRIZ_FILAS][MATRIZ_COLUMNAS]){
+	int suma = 0;
+	
+	// Recorro las filas
+	for (int fila = 0; fila < MATRIZ_FILAS; fila++){
+		// Recorro las columnas
+		for (int col = 0; col < MATRIZ_COLUMNAS; col++){
+			// Sumo el valor de cada fila y lo acumulo en 'suma'
+			suma += matriz[fila][col];
+		}
+		
+		cout << "Suma de la fila " << fila << " es " << suma << endl;
+		// Vuelvo a cero 'suma' para sumar cada fila
+		suma = 0;
+	}
+	
+}
+
+void mayorPorFila(int matriz[MATRIZ_FILAS][MATRIZ_COLUMNAS]){		
+	int arr[MATRIZ_FILAS] = {0};
+	int pos;
+	int valor;
+	
+	// Recorro las filas
+	for (int fila = 0; fila < MATRIZ_FILAS; fila++){		
+		// Recorro las columnas
+		for (int col = 0; col < MATRIZ_COLUMNAS; col++){
+			// Almaceno el valor de cada fila en un array unidimensional
+			arr[col] = matriz[fila][col];
+		}
+		// Le paso a la funcion 'maximo' 
+		// el array con los valores de cada fila, y el tamanio del vector
+		// y me devuelve la posicion del elemento con mayor valor
+		pos = maximo(arr, MATRIZ_FILAS);
+		// Reutilizo la posicion que me devuelve la funcion
+		// y se lo paso como indice al vector que guarda los valores de las filas
+		valor = arr[pos];
+		cout << "El mayor de la FILA " << fila	<< " es " << valor << endl;		
+	}
+}
+
+void menorPorFila(int matriz[MATRIZ_FILAS][MATRIZ_COLUMNAS]){
+	int arr[MATRIZ_FILAS] = {0};
+	int pos;
+	int valor;
+	
+	// Recorro las filas
+	for (int fila = 0; fila < MATRIZ_FILAS; fila++){		
+			// Recorro las columnas
+			// Almaceno el valor de cada fila en un array unidimensional
+			arr[col] = matriz[fila][col];
+		}
+		
+		// Le paso a la funcion 'maximo' 
+		// el array con los valores de cada fila, y el tamanio del vector
+		// y me devuelve la posicion del elemento con menor valor		
+		pos = minimo(arr, MATRIZ_FILAS);		
+		// Reutilizo la posicion que me devuelve la funcion
+		// y se lo paso como indice al vector que guarda los valores de las filas
+		valor = arr[pos];
+		cout << "El menor de la FILA " << fila	<< " es " << valor << endl;
+	}
+}
+
+// Devuelve la posicion del elemento con mayor valor
+// requiere pasar un array unidimensional y el tamanio (cantidad de elementos)
+int maximo(int array[], int tamanio) {
+	int pos = 0, max;
+	max = array[0];
+	for(int j = 0; j<=tamanio-1; j++) {
+		if(array[j]>max) {
+			pos = j;
+			max = array[j];
+		}
+	}
+	return pos;
+}
+
+// Devuelve la posicion del elemento con menor valor
+// requiere pasar un array unidimensional y el tamanio (cantidad de elementos)
+int minimo(int array[], int tamanio) {
+	int j = 0;
+	int posic, min;
+	while(j<=tamanio&&array[j]==0) {
+		j++;
+	}
+	posic = j;
+	min = array[j];
+	for(j = posic + 1 ; j<=tamanio-1; j++) {
+		if(array[j]!=0&&array[j]<min) {
+			posic = j;
+			min = array[j];
+		}
+	}
+	return posic;
 }

@@ -1,87 +1,40 @@
 /*
-1. Encuesta. Se deben registrar los resultados de una encuesta a clientes de una librería. El
-encuestador carga la cantidad de libros que los clientes dicen leer durante un año y el sistema
-registra en un array de 20 elementos la respuesta según el siguiente criterio: Más de 10 libros
-Asiduo (A), Entre 3 y 10 libros Frecuente (F) y por debajo de 3 Ocasional (O). Siempre se trabaja de
-a 20 encuestas por informe.
-Se pide: Crear un programa que permita cargar la cantidad de libros leídos por cliente por pantalla y
-muestre, también por pantalla, cuántos se registraron de cada categoría. Modularizar mediante
-subprogramas para que desde una función principal se invoque a una específica para cargar datos y
-a otra para obtener el informe
-*/
+ * 
+ * Crear una matriz con las tablas de multiplicar hasta el 5. El objetivo es mostrar
+ * por pantalla la siguiente salida:
+ * 
+ * 1	2	3	4	5 	6 	7 	8 	9 	10
+ * 2	4	6	8	10	12	14	16	18	20
+ * 3	6	9	12	15	18	21	24	27	30
+ * 4	8	12	16	20	24	28	32	36	40
+ * 5 	10	15	20	25	30	35	40	45	50
+ * 
+ * Donde el valor de las filas se multiplica por el valor de la columna. Sólo se puede
+ * emplear la estructura de control for.
+ * Nota: Para conseguir columnas de espacio uniforme de 3 caracteres, se deberá concatenar una llamada
+ * a la función setw(3) de la biblioteca iomanip a la salida.
+ * 
+ */
 #include <iostream>
-#include <cstdio>
+#include <iomanip>
 
 using namespace std;
 
-// variables globales
-const int CANTIDAD_ELEMENTOS = 10;
-// prototipos
-void cargar_datos(char []);
-void obtener_informe(char []);
-
 int main(){
-	char arr[CANTIDAD_ELEMENTOS];
 
-	cargar_datos(arr);
-	obtener_informe(arr);
-	
-	return 0;
-}
+int numero;
 
-/*
-El encuestador carga la cantidad de libros que los clientes dicen leer durante un año y el sistema
-registra en un array de 20 elementos la respuesta según el siguiente criterio: 
-*/
-void cargar_datos(char arr[]){
-	int cantidad;
-	
-	// Siempre se trabaja de a 20 encuestas por informe.
-	for(int i=0; i < CANTIDAD_ELEMENTOS; i++){
-		cout << "Cantidad de libros: ";
-		cin >> cantidad;
+	// Muestra numeros del 1 al 5
+	for(int i = 1; i <= 5; i++){
+		// Muestra los numeros del 1 al 10
+		for(int d = 1; d <= 10; d++){
+			// Multiplicar el numero i por el d
+			numero = (i*d);
+			cout << setw(3) << numero;			
+		}
 		
-		// Más de 10 libros Asiduo (A)
-		if(cantidad > 10)
-			arr[i] = 'A';
-		// Entre 3 y 10 libros Frecuente (F)
-		else if(cantidad > 3 && cantidad < 10)
-			arr[i] = 'F';
-		// por debajo de 3 Ocasional (O).
-		else if(cantidad < 3)
-			arr[i] = 'O';
-	}
-	
-}
-
-/*
-Se pide: Crear un programa que permita cargar la cantidad de libros leídos por cliente por pantalla y
-muestre, también por pantalla, cuántos se registraron de cada categoría. Modularizar mediante
-subprogramas para que desde una función principal se invoque a una específica para cargar datos y
-a otra para obtener el informe
-*/
-void obtener_informe(char arr[]){
-	int contador_A = 0;
-	int contador_F = 0;
-	int contador_O = 0;
-	char categoria;
-	
-	for(int i=0; i < CANTIDAD_ELEMENTOS; i++){
-		categoria = arr[i];
-
-		if(categoria == 'A')
-			contador_A++;
-		else if(categoria == 'F')
-			contador_F++;
-		else if(categoria == 'O')
-			contador_O++;
+		cout << endl;
 	}
 
-	printf("Categoria A: %i \n", contador_A);
-	printf("Categoria F: %i \n", contador_F);
-	printf("Categoria O: %i \n", contador_O);
-	
+return 0;
 }
-
-
-// funciones
