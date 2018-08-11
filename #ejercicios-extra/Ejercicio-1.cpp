@@ -28,15 +28,17 @@
 
 using namespace std;
 
+//
+// # Main
+//
 int main(){
-  // Fix precision
+  // Defino la cantidad de decimales a mostrar en los campos tipo float
   cout << setprecision(2);
   cout << fixed << showpoint;
-
-  /*
-   * Declaración de variables
-  */
   
+  //
+  // # Defino Variables
+  //
   int numeroCliente;
   short cantidadCanalesHD;
   short cantidadConexiones;
@@ -50,10 +52,12 @@ int main(){
   float importeServicioBasico;
   float importePorCadaCanalHD;
   float importeCanalesHD;
-
-  /*
-   * Ingreso de información
-   */
+  
+  /*****************************************************************************************************/
+ 
+  //
+  // # Entrada de Datos
+  //
   cout << "Numero de cliente: ";
   cin >> numeroCliente;
 
@@ -66,6 +70,11 @@ int main(){
   cout << "Cantidad de canales: ";
   cin >> cantidadCanalesHD;
 
+  /*****************************************************************************************************/
+  
+  //
+  // # Proceso de informacion
+  //
   switch(tipoCliente){
   case 'r': case 'R':
     // valores predefinidos para Cliente Residencial
@@ -98,21 +107,22 @@ int main(){
       // Se cobra un adicional por cada canal
       // si supera la cantidad de conexiones adicionales
       importeServicioBasico += (cantidadConexionesAdicionales * importePorCadaCanalHD);
-    }
+    } // end if
     
     break;
     
   }
-
-  /*
-   * Mostrar información generada
-   */
   
   // Se multiplica la cantidad de canales contratados por el importe predefinidos de por cada canal
   importeCanalesHD = (importePorCadaCanalHD * cantidadCanalesHD);
   // Sumatoria total de todos los importes
   importeTotal = (importeEnvioFactura + importeServicioBasico + importeCanalesHD);
+  
+  /*****************************************************************************************************/
 
+  //
+  // # Salida de datos
+  //  
   cout << '\n'; // salto de linea
   cout << "*Importe por Envio de Factura: $" << importeEnvioFactura << endl;
   cout << "*Importe por Servicio Basico: $" << importeServicioBasico << endl;

@@ -1,16 +1,16 @@
 /*
  *
  * Retomando el Ejercicio 1 (Empresa de TV por cable), reorganizar
- * el programa separando el cálculo de la facturación por módulos específicos para
- * clientes residenciales y comerciales. Ambas funciones recibirán por parámetro la
- * cantidad de conexiones HD y deberán retornar el importe calculado. Para el caso
- * que fuera necesario solicitar más datos (cantidad de conexiones adicionales),
- * agregar las sentencias dentro del cuerpo de la función específica.
+ * el programa separando el cC!lculo de la facturaciC3n por modulos especificos para
+ * clientes residenciales y comerciales. Ambas funciones recibiran por parametro la
+ * cantidad de conexiones HD y deberan retornar el importe calculado. Para el caso
+ * que fuera necesario solicitar mas datos (cantidad de conexiones adicionales),
+ * agregar las sentencias dentro del cuerpo de la funcion especifica.
  * 
- * La función main() solicitará el número de cliente, tipo de cliente, la cantidad de
- * conexiones HD y decidirá qué función invocar según el tipo de cliente ingresado
- * por el usuario. Finalmente mostrará por pantalla el importe calculado, junto con el
- * número de cliente.
+ * La funcion main() solicitara el numero de cliente, tipo de cliente, la cantidad de
+ * conexiones HD y decidira que funcion invocar segun el tipo de cliente ingresado
+ * por el usuario. Finalmente mostrara por pantalla el importe calculado, junto con el
+ * numero de cliente.
  * 
  * Pista: Puede declarar variables constantes globales con el importe de cada cargo
  * 
@@ -20,34 +20,44 @@
 
 using namespace std;
 
-// Prototipos
+//
+// # Prototipos
+//
 float cliente_residencial_importe(int);
 float cliente_comercial_importe(int);
 
-// Variables Globales
-float CLIENTE_COMERCIAL_ENVIO_FACTURA = 15;
-float CLIENTE_COMERCIAL_SERVICIO_BASICO = 75;
-float CLIENTE_COMERCIAL_POR_CANAL_HD = 5;
+//
+// # Variables Globales
+//
+int CLIENTE_COMERCIAL_ENVIO_FACTURA = 15;
+int CLIENTE_COMERCIAL_SERVICIO_BASICO = 75;
+int CLIENTE_COMERCIAL_POR_CANAL_HD = 5;
 int CLIENTE_COMERCIAL_CONEXIONES_ADICIONALES_MIN = 10;
 
 float CLIENTE_RESIDENCIAL_ENVIO_FACTURA = 4.50;
 float CLIENTE_RESIDENCIAL_SERVICIO_BASICO = 20.5;
-float CLIENTE_RESIDENCIAL_POR_CANAL_HD = 5;
+int CLIENTE_RESIDENCIAL_POR_CANAL_HD = 5;
 
 int main(){
-	// Fix precision
+	// Defino la cantidad de decimales a mostrar en los campos tipo float
 	cout << setprecision(2);
 	cout << fixed << showpoint;
-
-	// Variables locales
+	
+	//
+	// Defino Variables
+	//
 	int numeroCliente;
 	float importe;
 	short cantidadCanalesHD;
 	short cantidadConexiones;
  
 	char tipoCliente;
+	
+	/****************************************************************************/
 
-	// Entrada de datos
+	//
+	// # Entrada de Datos
+	//
 	cout << "Numero de cliente: ";
 	cin >> numeroCliente;
 
@@ -59,6 +69,11 @@ int main(){
 	cout << "Cantidad de canales: ";
 	cin >> cantidadCanalesHD;
 
+	/****************************************************************************/
+	
+	//
+	// # Proceso de informacion
+	//
 	switch(tipoCliente){
 	case 'r': case 'R':
 		importe = cliente_residencial_importe(cantidadCanalesHD);
@@ -67,13 +82,20 @@ int main(){
 		importe = cliente_comercial_importe(cantidadCanalesHD);
 		break;
 	}
-
+	
+	/****************************************************************************/
+	
+	//
+	// # Salida de Datos
+	//
 	cout << "Numero de Cliente: " << numeroCliente << endl;
 	cout << "Importe: " << importe <<endl;								
 	return 0;
 }
 
-// Definición de las Funciones
+//
+// # Funciones
+//
 float cliente_residencial_importe(int cantidadCanalesHD){	
 	// Multiplico cantidad de canales contratados por el importe por cada canal
 	float importeCanales = (CLIENTE_RESIDENCIAL_POR_CANAL_HD * cantidadCanalesHD);
@@ -84,7 +106,7 @@ float cliente_residencial_importe(int cantidadCanalesHD){
 
 float cliente_comercial_importe(int cantidadCanalesHD){
 	float importeCanales;
-	int cantidadConexiones
+	int cantidadConexiones;
 	int cantidadConexionesAdicionales;
 		// Si supera esta cantidad, se cobra un adicional por c/conexion
 		cout << "Cantidad de conexiones: ";

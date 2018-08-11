@@ -1,114 +1,115 @@
+/*
+ * Display. ​Se debe agregar una funcionalidad que permita rotar caracteres de una
+ * pantalla monocromática. Cada caracter está conformado por una matriz cuadrada 
+ * (16 filas x16 columnas) de booleanos y, según el valor recibido por parámetro, 
+ * la función rotará 90, 180 o 270 grados la matriz hacia la derecha.
+ *
+ * El prototipo de la función es: 
+ * void rotar(bool[][], short);
+ *
+ * Se pide:
+ * Implementar la función rotar() contemplando las 3 alternativas. En caso de no recibir
+ * ninguno de esos 3 valores, no realizar ningún cambio.
+ *
+ * Pruebas: Desde la función main() crear, invocar la función mostrar, rotar 90 grados y volver
+ * a mostrar la matriz.
+*/
+
 #include <iostream>
-#include <stdio.h>
-#include <math.h>
-#include <iomanip>
 
-using namespace std;
+  using namespace std;
 
-//
-// # VARIABLES GLOBALES
-//
-const double X0=2, X1=-4, X2=1; // se reutilizan en f()
+void imprimir(bool[16][16]);
+void rotar(bool[16][16], int);
 
-//
-// # PROTOTIPOS
-//
-double f(double X);
-void aproximacionRaiz(double, double, double &);
-void evaluaciones(double &, double &, double, bool &);
-void solicitarDatos(double &, double &, double &, int &, bool &);
+int main() {
+	
+	bool matrix[16][16] = {
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0},
+		{0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0},
+		{0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0},
+		{0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0},
+		{0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
+		{0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
+		{0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	};
+ 
+  imprimir(matrix);
 
-//
-// # MAIN
-//
-int main(){
-    cout<<fixed<<setprecision(4);
-    
-    int N, contador=0; // se reutiliza en el bucle
-    bool salir = false; // centinela que controla el bucle
-    double a, b, xR, s;
+  rotar(matrix, 90); // solo 90,180,270,360
+  imprimir(matrix);
 
-    // Datos de entrada        
-    solicitarDatos(a, b, s, N, salir);
+  rotar(matrix, 180); // solo 90,180,270,360
+  imprimir(matrix);
 
-    // Mientras que 'salir' tenga valor 'false' se sigue ejecutando
-    while(!salir){
-        // PASO 2: aproximacion a la raiz
-        aproximacionRaiz(a, b, xR);
-        // PASO 3: EVALUACIONES
-        // se le pasa como parametro el centinela 'salir' para detener el bucle
-        // de ser necesario
-        evaluaciones(a, b, xR, salir);
-        // PASO 4: NUEVA APROXIMACION
-        aproximacionRaiz(a, b, xR);
-        // PASO 5: VERIFICA SI LA APROXIMACION ES EXACTA
-        // se compara con 's' que es la cota de error de tolerancia
-        if(xR == s)
-            salir = true; // habilito el centinela 'salir' que detiene el bucle
-        else
-            evaluaciones(a, b, xR, salir);  // sino se cumple vuelvo al paso 3
-
-        // Iterar N veces o hasta que el error sea menor a la cota
-        // Dejar de iterar si el error es menor que la cota
-        if((xR < s && xR > -s) || contador == N-1)
-            salir = true; // habilito el centinela 'salir' que maneja el bucle
-
-        cout<<"ITERACION "<< contador+1 <<endl;
-        cout<<"a: "<< a;
-        cout<<", ";
-        cout<<"b: " << b;
-        cout<<", ";
-        cout<<"xR: " << xR;
-        cout<<endl;
-        cout<<"-----------------------------"<<endl;
-
-        contador++;
-    } // end while
-    
-    cout<<"Criterio de parada evaluado:"<<endl;
-    cout<<"Se alcanzaron las "<< contador <<" iteraciones."<<endl;
-    cout<<"Raiz encontrada en X es "<<xR<<endl;
-
-    return 0;
+  return 0;
 }
 
-//
-// # FUNCIONES
-//
-double f(double X){
-    return X0*pow(X, 0) + X1*pow(X, 1) + X2*pow(X, 2);
-}
-
-void aproximacionRaiz(double a, double b, double &xR){
-    xR = ((a + b) / 2);
-}
-
-void evaluaciones(double &a, double &b, double xR, bool &salir){
-	double producto = f(a) * f(xR);
-    
-    if(producto < 0)
-        b = xR;
-    else if(producto > 0)
-        a = xR;
-    else if(producto == 0)
-        salir = true; // habilito el centinela 'salir' que detiene el bucle
-}
-
-void solicitarDatos(double &a, double &b, double &s, int &N, bool &salir){
-    cout<<"Ingrese valor a del intrevalo (0 en ambos valores para salir): ";
-    cin>>a;
-    
-    cout<<"Ingrese valor b del intrevalo: ";
-    cin>>b;
-    
-    // Condicion que aparece al ingresar los datos
-    if(a == 0 && b == 0)
-        salir = true; // habilito el centinela 'salir' que detiene el bucle
-    else{
-        cout<<"Ingrese el e <error>: ";
-        cin>>s;
-        
-        cout<<"Ingrese la cantidad de iteraciones deseadas: ";
-        cin>>N;        
+void imprimir(bool matrix[16][16]) {
+  // filas    
+  for (int i = 0; i < 16; i++) {
+    // columnas
+    for (int j = 0; j < 16; j++) {
+			if(matrix[i][j] == 0)
+				cout << " ";
+			else
+				cout << matrix[i][j];
     }
+    cout << endl;
+  }
+  cout << endl;
+}
+
+void rotar(bool matrix[16][16], int angle) {
+  int matrix_aux[16][16] = {0};
+  int rotarVeces;
+  bool puedeRotar = false; // bandera que determina si rotar o no
+
+  if (angle == 90 || angle == 180 || angle == 270 || angle == 360) {
+    rotarVeces = (angle / 90);
+    puedeRotar = true;
+  }
+
+  if (puedeRotar) {
+    // 'x' determina cuantas veces se gira la matriz
+    for (int x = 0; x < rotarVeces; x++) {
+      // cada vez que itera 'x' vuelvo a cambiar los valores 
+      // de la matriz auxiliar
+      for (int i = 0; i < 16; i++) {
+        for (int j = 0; j < 16; j++) {
+          matrix_aux[i][j] = matrix[i][j];
+        }
+      }
+
+      // filas    
+      for (int i = 0; i < 16; i++) {
+        // columnas
+        for (int j = 0; j < 16; j++) {
+          // Con matrix[i][j] recorro todas las columnas de cada fila
+          // En el segundo for 'j' representa todas las columnas de c/fila
+          // mientras que 'i' se mantiene fija.
+          // Ej. i=0, j=0,j=1,j=2,j=3, ..
+          // Ej. i=1, j=0,j=1,j=2,j=3, .. 
+          //
+          // Con matrix[j][15-i] recorro todos las filas de cada columna
+          // 'j' representa cada fila de una columna
+          // [15-i] toma las columnas de derecha a izquierda
+          // La primera fila => cuarta columna
+          // La segunda fila => tercera columna
+          // La tercera fila => segunda columna
+          // La cuarta fila => primera columna
+          matrix[i][j] = matrix_aux[j][15 - i];
+        }
+      }
+    }
+  }
 }

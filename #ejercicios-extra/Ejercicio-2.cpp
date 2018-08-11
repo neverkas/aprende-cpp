@@ -21,20 +21,27 @@
 using namespace std;
 
 int main(){
+	//
+	// # Defino Variables
+	//
+	int numero;
 
-int numero;
-
+	// 
+	// # Proceso de informacion
+	// # Salida de Datos
+	//
 	// Muestra numeros del 1 al 5
 	for(int i = 1; i <= 5; i++){
 		// Muestra los numeros del 1 al 10
 		for(int d = 1; d <= 10; d++){
 			// Multiplicar el numero i por el d
 			numero = (i*d);
+			// setw() genera x cantidad espacio segun el parametro que se le pase
 			cout << setw(3) << numero;			
 		}
 		
 		cout << endl;
 	}
 
-return 0;
+	return 0;
 }
