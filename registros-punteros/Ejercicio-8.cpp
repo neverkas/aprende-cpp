@@ -1,27 +1,41 @@
 #include <iostream>
-#include <cstdio>
+#include <stdio.h>
 
 using namespace std;
 
-// structs
+//
+// # Structs
+//
 struct Empleado{
 	char nombre[30];
 	int edad;
 };
 
-// prototipos
+/******************************************************************************/
+
+//
+// # Prototipos
+//
 void leer();
 void escribir();
 void menu();
 
-// variables globales
+/******************************************************************************/
+
+//
+// # Variables Globales
+//
 FILE *ARCHIVO;
 
 int CANTIDAD_EMPLEADOS = 2;
 Empleado *EMPLEADOS = new Empleado[CANTIDAD_EMPLEADOS];
 char ARCHIVO_NOMBRE[20] = "Empleados.dat";
 
-// main
+/******************************************************************************/
+
+//
+// # Main
+//
 int main(){
 	cout<<"Nombre del archivo:";
 	cin>>ARCHIVO_NOMBRE;
@@ -38,7 +52,11 @@ int main(){
 	return 0;
 }
 
-// funciones
+/******************************************************************************/
+
+//
+// # Funciones
+//
 void menu(){
 	int opcion;
 

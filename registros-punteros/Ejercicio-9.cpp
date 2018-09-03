@@ -1,25 +1,38 @@
-#include <cstdio>
 #include <iostream>
-#include <cstring>
+#include <stdio.h>
+#include <string.h>
 
 using namespace std;
 
-
-// STRUCTS
+//
+// # Structs
+//
 struct Empleado{
     char nombre[30];
 };
 
-// VARIABLES GLOBALES
-char ARCHIVO_NOMBRE[30] = "empleados.dat";
-const int EMPLEADOS_CANT_MAX = 5;
+/********************************************************************************/
 
-// PROTOTIPOS
+//
+// # Variables Globales
+//
+#define ARCHIVO_NOMBRE "empleados.dat"
+#define EMPLEADOS_CANT_MAX 5
+
+/********************************************************************************/
+
+//
+// # Prototipos
+//
 Empleado agregar_empleado(Empleado [], int &, const char []);
 Empleado agregar_empleados(Empleado [], int);
 Empleado listado_empleados(Empleado [], int);
 
-// MAIN
+/********************************************************************************/
+
+//
+// # Main
+//
 int main(){
     Empleado empleados[EMPLEADOS_CANT_MAX];
 
@@ -34,7 +47,11 @@ int main(){
     return 0;
 }
 
-// FUNCIONES
+/********************************************************************************/
+
+//
+// # Funciones
+//
 Empleado agregar_empleado(Empleado listado[], int &empleados_num, const char nombre[]){		
     strcpy(listado[empleados_num].nombre, nombre);
 		

@@ -2,16 +2,23 @@
  * ARREGLOS DINAMICOS
 */
 #include <iostream>
-#include <cstdlib> // new && delete
-#include <cstdio>
+#include <stdio.h>
+#include <stdlib.h> // new && delete
 
 using namespace std;
 
-
+//
+// # Prototipos
+//
 void agregar(int *, int);
 void imprimir(int *, int);
 void ordenar(int *, int);
 
+/*********************************************************************************/
+
+//
+// # Main
+//
 int main(){
 	int *notas_listado; // puntero
 	int notas_cantidad = 3;	
@@ -31,6 +38,11 @@ int main(){
 	return 0;
 }
 
+/*********************************************************************************/
+
+//
+// # Funciones
+//
 void ordenar(int *listado, int cantidad){
 	// Ordenamiento burbuja con punteros
 	int aux;

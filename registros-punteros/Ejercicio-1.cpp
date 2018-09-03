@@ -20,11 +20,19 @@
 
 using namespace std;
 
+//
+// # Prototipos
+//
 void mostrar_numeros(int *, int);
 void intercambiar_direccion(int *, int *);
 void intercambiar_direccion_arr(int *, int *, int);
 void mostrar_direccion(int, int);
 
+/*********************************************************************************/
+
+//
+// # Main
+//
 int main(){
 	int len;
 	//
@@ -77,6 +85,11 @@ int main(){
 	return 0;
 }
 
+/*********************************************************************************/
+
+//
+// # Funciones
+//
 void intercambiar_direccion(int *numero_par, int *numero_impar){
 	int aux;
 

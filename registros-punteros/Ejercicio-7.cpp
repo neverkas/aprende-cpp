@@ -2,7 +2,7 @@
  * ESTRUCTURA DINAMICA (CON PUNTEROS)
 */
 #include <iostream>
-#include <cstdio>
+#include <stdio.h>
 
 using namespace std;
 
@@ -12,10 +12,19 @@ struct Empleado{
 	float sueldo;
 };
 
-// prototipos
-int crear(Empleado e);
-int modificar(Empleado e);
+/*********************************************************************************/ 
 
+//
+// # Prototipos
+//
+int crear(Empleado);
+int modificar(Empleado);
+
+/*********************************************************************************/ 
+
+//
+// # Main
+//
 int main(){
 	int cantidad, *numeros;	
 

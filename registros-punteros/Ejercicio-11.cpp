@@ -2,9 +2,17 @@
 
 using namespace std;
 
-const int CANT_MUTANTES_MAX = 10;
-const int CANT_PLANETAS_MAX = 10;
+//
+// # Variables Globales
+//
+#define CANT_MUTANTES_MAX 10
+#define CANT_PLANETAS_MAX 10
 
+/**********************************************************************/
+
+//
+// # Structs
+//
 struct Mutante{
     string nombre;
     int fuerza;
@@ -16,6 +24,11 @@ struct Planeta{
     int cantidadMutantes;
 };
 
+/**********************************************************************/
+
+//
+// # Main
+//
 int main()
 {
     int cantidadPlanetas;

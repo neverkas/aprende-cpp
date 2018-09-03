@@ -9,8 +9,8 @@
  * 
 */
 #include <iostream>
-#include <cstdlib>
-#include <cstdio>
+#include <stdio.h>
+#include <stdlib.h>
  
 using namespace std;
 
@@ -24,7 +24,9 @@ struct Estudiante{
 // Variables globales
 const int CANTIDAD_ESTUDIANTES = 2;
 
-// prototipos
+//
+// # Prototipos
+//
 void menu();
 void menu_opciones();
 void agregar_estudiantes(Estudiante [], int);
@@ -33,14 +35,18 @@ void imprimir_estudiantes(Estudiante [], int);
 void imprimir_estudiante(Estudiante [], int);
 int buscar_estudiante(Estudiante [], int);
 
-// VARIABLES GLOBALES
+//
+// # Main
+//
 int main(){
 	menu();
 	
 	return 0;
 }
 
-// funciones
+//
+// # Funciones
+//
 void menu_opciones(){
 	cout<<"##########################################################"<<endl;
 	cout<<endl;

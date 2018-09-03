@@ -3,8 +3,8 @@
  * SIMULAR BATALLAS/ESCENARIOS/CONFRONTAMIENTOS
 */
 #include <iostream>
-#include <cstring>
-#include <cstdio>
+#include <stdio.h>
+#include <string.h>
 
 using namespace std;
 
@@ -20,11 +20,20 @@ struct Personaje{
 	struct Habilidades habilidades_info;
 };
 
-// prototipos
+/*********************************************************************************/ 
+
+//
+// # Prototipos
+//
 Personaje * crear_personaje(string, string,int, int);
 void atacar(Personaje *p1, Personaje *p2);
 void imprimir(Personaje *p);
 
+/*********************************************************************************/ 
+
+//
+// # Main
+//
 int main(){
 	Personaje *p1, *p2;
     
@@ -47,7 +56,11 @@ int main(){
 	delete p2;
 }
 
-// funciones
+/*********************************************************************************/ 
+
+//
+// # Funciones
+//
 Personaje * crear_personaje(string nombre, string tipo, int vida, int fuerza){
 	Personaje * p = new Personaje;
 	p->nombre = nombre;
