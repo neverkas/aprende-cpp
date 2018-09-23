@@ -1,0 +1,16 @@
+﻿Ejercicio 1
+Un detective necesita ingresar en su ordenador por separado la cantidad de policías, mafiosos que entrevistó y cuantos de ellos mintieron. El programa debe determinar el total de personas que entrevistó, y el porcentaje de mentirosos por sobre el total.
+
+Ejercicio 2 (pendiente a chequear si esta bn determinar el area)
+Un hechizero desea crear un cubo mágico para derrotar a todos sus enemigos en un instante, pero necesita saber cuanto espacio ocuparia en su bolsillo si conociera la longitud de uno de sus lados.
+
+Ejercicio 3
+Uno de los archivoenemigos de Superman quiere saber cuantas kriptonitas necesita para debilitarlo por completo. Sólo conoce que una kriptonita lo debilita un 25% del total.
+
+Ejercicio 4:
+Tres jóvenes fueron fueron afectados por un estallido de rayos gamma con una potencia de 6200 grays. El primero en llegar recibió el 50%, el segundo el 30% y el tercero 20%.
+Los cientificos de S.H.I.E.L.D tienen la obligación de calcular de cuanto fue la radiación a cada uno de los jovenes. Si es mayor a 500 grays podran formar parte de la organización, caso contrario no se les dirá nada.
+
+
+
+

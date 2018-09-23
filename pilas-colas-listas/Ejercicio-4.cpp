@@ -1,65 +1,54 @@
 #include <iostream>
+#include <stdio.h> // null
 
 using namespace std;
 
+//
+// # Struct
+//
+template<typename T>
 struct Nodo{
-	int dato;
-	Nodo *siguiente;
+    T dato;
+    Nodo<T> *sig;    
 };
+//
+// # Prototipos
+//
+template<typename T> void push(Nodo<T> *&, T);
+template<typename T> T pop(Nodo<T> *&);
 
-// prototipos
-void agregar(Nodo *&, Nodo *&, int);
-int quitar(Nodo *&, Nodo *&);
-
-// main
+//
+// # Main
+//
 int main(){
-	Nodo *frente = NULL;
-	Nodo *cola = NULL;
-	int n;
+    Nodo<int> *numeros = NULL;
 
-	do{
-		cout << "Ingrese un numero: ";
-		cin >> n;
-		agregar(frente, cola, n);
-		cout << endl;
-	}while(n != -1);
-	cout << endl;
+    push<int>(numeros, 1);
+    push<int>(numeros, 2);
+    push<int>(numeros, 5);
 
-	while(frente != NULL){
-		cout << quitar(frente, cola) << " ";
-	}
-	cout << endl;
-	
-	return 0;
+    while(numeros != NULL){
+        cout << pop<int>(numeros) << endl;
+    }    
+
+    return 0;
 }
 
-// funciones
-void agregar(Nodo *&frente, Nodo *&cola, int dato){
-	Nodo *nuevo_nodo = new Nodo();
-	nuevo_nodo->dato = dato;
-	nuevo_nodo->siguiente = NULL;
-
-	if(frente == NULL){
-		frente = nuevo_nodo;
-	}else{
-		cola->siguiente = nuevo_nodo;
-	}
-	
-	cola = nuevo_nodo; // Esto no pisa cola->siguiente ??
+//
+// # Funciones
+//
+template<typename T> void push(Nodo<T> *&pila, T dato){
+    Nodo<T> *nuevo = new Nodo<T>();
+    nuevo->dato = dato;
+    nuevo->sig = pila;
+    pila  = nuevo;
 }
 
-int quitar(Nodo *&frente, Nodo *&cola){
-	Nodo *aux = frente;
-	int dato = aux->dato;
+template<typename T> T pop(Nodo<T> *&pila){
+    Nodo<T> *aux = pila;
+    T dato = aux->dato;
+    pila = aux->sig;
 
-	if(frente == cola){
-		frente = NULL;
-		cola = NULL;
-	}else{
-		// Porque no cola->siguiente? si en agregar() los agrego ahi
-		frente = frente->siguiente;
-	}
-
-	delete aux;
-	return dato;
+    delete aux;
+    return dato;
 }

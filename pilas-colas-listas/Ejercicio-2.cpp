@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdio.h>
 
 using namespace std;
 
@@ -7,41 +8,74 @@ struct Nodo{
 	Nodo *siguiente;
 };
 
-// prototipos
-void agregar_pila(Nodo *&, int);
-int remover_pila(Nodo *&);
+void agregar_cola(Nodo *&, Nodo *&, int);
+int remover_cola(Nodo *&, Nodo *&);
 
 int main(){
-	Nodo *lista = NULL;
+	Nodo *frente = NULL;
+	Nodo *fin = NULL;
+	int dato;
+	char respuesta;
+	
+	do{
+		cout<<"Desea agregar nuevos datos? (s/n)";
+		cin>>respuesta;
+		
+		if(respuesta == 's' || respuesta == 'S'){
+			cout<<"Ingrese un numero: ";
+			cin>>dato;
+		}
+		
+		agregar_cola(frente, fin,  dato);
+	}while(respuesta == 's' || respuesta == 'S');
 
-	agregar_pila(lista, 3);
-	agregar_pila(lista, 1);
-	agregar_pila(lista, 9);
-
-	cout << "Lista: ";
-	while(lista != NULL){
-		cout << remover_pila(lista) << " ";
+	cout << "Listado:" << endl;
+	
+	while(frente != NULL){
+		cout<<"frente: "<<frente->dato;
+		cout<<", fin: "<<fin->dato;
+		cout<<endl;
+		
+		cout << remover_cola(frente, fin) << " ";
 	}
 	cout << endl;
-	
+
 	return 0;
 }
 
-// funciones
-int remover_pila(Nodo *&lista){
-	Nodo *aux = lista;
-	int dato = aux->dato;
-	lista = aux->siguiente;
+void agregar_cola(Nodo *&frente, Nodo *&fin, int dato){
+	Nodo *nuevo_nodo = new Nodo();
+	nuevo_nodo->dato = dato;
+	nuevo_nodo->siguiente = NULL;
+
+	// no hay elementos
+	if(frente == NULL){
+		frente = nuevo_nodo;
+	}
+	// hay mas de un elemento
+	else{
+		fin->siguiente = nuevo_nodo;
+		//fin = nuevo_nodo;
+	}
+	
+	fin = nuevo_nodo;
+	//fin->siguiente = nuevo_nodo;
+}
+
+int remover_cola(Nodo *&frente, Nodo *&fin){
+	int dato = frente->dato;
+	Nodo *aux = frente;
+	
+	// Si frente es igual a fin,
+	// es porque solo hay 1 elemento
+	if(frente == fin){
+		frente = NULL;
+		fin = NULL;
+	}
+	else{
+		frente = frente->siguiente;
+	}
 
 	delete aux;
 	return dato;
-}
-
-void agregar_pila(Nodo *&lista, int dato){
-	Nodo *nuevo_nodo = new Nodo();
-	
-	nuevo_nodo->dato = dato;
-	nuevo_nodo->siguiente = lista;
-	
-	lista = nuevo_nodo;
 }
