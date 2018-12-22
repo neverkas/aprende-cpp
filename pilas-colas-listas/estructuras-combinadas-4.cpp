@@ -34,8 +34,12 @@ struct Curso{
 //
 // # Prototipos 
 //
-void agregar(Nodo *&p, Alumno v);
-void mostrarInfo(Alumno a);
+// prototipos necesarios para listas
+void agregar(Nodo *&l, Alumno v);
+void listarLista(Nodo *l);
+// prototipos básicos
+void listarVector(Curso v[], int len);
+void mostrarDatos(Alumno a);
 Alumno crearAlumno(int legajo, string nombre);
 Curso crearCurso(int id, string nombre, Nodo *inscriptos);
 
@@ -58,17 +62,6 @@ int main(){
     agregar(inscriptos3, crearAlumno(011, "Juan"));
     agregar(inscriptos3, crearAlumno(012, "Manu"));
     cursos[2] = crearCurso(2, "Discreta", inscriptos3);
-
-    for(int i=0; i < CANT_CURSOS; i++){
-        Curso c = cursos[i];
-
-        cout << "ID:" << c.id;
-        cout << ", NOMBRE: " << c.nombre;
-        cout << endl;
-
-        mostrar(cursos[i].inscriptos);
-        cout << endl;
-    }
 
     return 0;
 }
@@ -96,21 +89,34 @@ void agregar(Nodo *&p, Alumno v){
     }
 }
 
-void mostrarInfo(Alumno a){
+void listarLista(Nodo *l){
+    while(l != NULL){
+        mostrarDatos(l->info);
+        l = l->sig;
+    }
+}
+
+//
+// # Funciones básicas
+//
+void listarVector(Curso v[], int len){
+    for(int i=0; i < len; i++){
+        Curso c = v[i];
+
+        cout << "ID:" << c.id;
+        cout << ", NOMBRE: " << c.nombre;
+        cout << endl;
+
+        listarLista(v[i].inscriptos);
+        cout << endl;
+    }
+}
+
+void mostrarDatos(Alumno a){
     cout << "LEGAJO: " << a.legajo;
     cout << ", NOMBRE: " << a.nombre;
 
     cout << endl;
-}
-
-void mostrar(Nodo *p){
-    Nodo *aux = p;
-
-    while(aux != NULL){
-        mostrarInfo(aux->info);
-
-        aux = aux->sig;
-    }
 }
 
 Alumno crearAlumno(int legajo, string nombre){

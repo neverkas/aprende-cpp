@@ -1,54 +1,45 @@
 #include <iostream>
-#include <stdio.h> // null
+#include <stdio.h> // printf()
 
 using namespace std;
 
-//
-// # Struct
-//
-template<typename T>
-struct Nodo{
-    T dato;
-    Nodo<T> *sig;    
-};
-//
-// # Prototipos
-//
-template<typename T> void push(Nodo<T> *&, T);
-template<typename T> T pop(Nodo<T> *&);
+void insertar(int *&p, int v){
+    int *n = new int(v);
+    p = n;
+}
 
-//
-// # Main
-//
-int main(){
-    Nodo<int> *numeros = NULL;
+int main()
+{
+    // declaro puntero donde guardare multiples punteros
+    int *p; 
+    // reservo espacio en memoria para el numero entero 5
+    int *n1 = new int(5);
+    // guardo en el puntero el otro puntero 'n1' que tiene valor 5
+    p = n1;
+    // declaro puntero y guardo la direccion de memoria que apunta a n1
+    // que luego borrarè
+    int *n = p;
+    // imprimo el valor de n1 que es 5
+    cout << *p << endl;
+    // borro la direccion en memoria de n1 que se guardó en 'n'
+    delete n;
+    // 
+    cout << *p << endl;
 
-    push<int>(numeros, 1);
-    push<int>(numeros, 2);
-    push<int>(numeros, 5);
+    /**********************************************************************************/
+    
+    int n3;
+    
+    // le asigno al puntero 'p' la direccion de memoria de 'n1'
+    p=&n3;
+    // asigno el valor 3 a 'n1'
+    // este cambio se hara en 'n1'
+    *p=3;
+    // imprime la direccion en memoria de n1
+    cout << "direccion en memoria de n1: " << p << endl;
+    // imprime el valor de n1 que es 3
+    cout << "valor asignado a n1: " << *p << endl;
 
-    while(numeros != NULL){
-        cout << pop<int>(numeros) << endl;
-    }    
 
     return 0;
-}
-
-//
-// # Funciones
-//
-template<typename T> void push(Nodo<T> *&pila, T dato){
-    Nodo<T> *nuevo = new Nodo<T>();
-    nuevo->dato = dato;
-    nuevo->sig = pila;
-    pila  = nuevo;
-}
-
-template<typename T> T pop(Nodo<T> *&pila){
-    Nodo<T> *aux = pila;
-    T dato = aux->dato;
-    pila = aux->sig;
-
-    delete aux;
-    return dato;
 }

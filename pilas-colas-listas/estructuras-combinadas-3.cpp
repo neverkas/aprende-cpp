@@ -19,7 +19,7 @@ struct Alumno{
 // # Prototipos
 //
 Alumno crearAlumno(int legajo, string nombre, int nota);
-void mostrarAlumno(Alumno a);
+void mostrarDatos(Alumno a);
 
 //
 // # Main
@@ -31,7 +31,7 @@ int main(){
     alumnos[2] = crearAlumno(03, "Mariano", 1);
 
     for(int i=0; i < 3; i++){
-        mostrarAlumno(alumnos[i]);
+        mostrarDatos(alumnos[i]);
     }
 
     return 0;
@@ -49,6 +49,6 @@ Alumno crearAlumno(int legajo, string nombre, int nota){
     return a;
 }
 
-void mostrarAlumno(Alumno a){
+void mostrarDatos(Alumno a){
     cout << a.nombre << endl;
 }
