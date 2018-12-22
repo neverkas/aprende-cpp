@@ -55,11 +55,9 @@ void agregar_cola(Nodo *&frente, Nodo *&fin, int dato){
 	// hay mas de un elemento
 	else{
 		fin->siguiente = nuevo_nodo;
-		//fin = nuevo_nodo;
 	}
 	
 	fin = nuevo_nodo;
-	//fin->siguiente = nuevo_nodo;
 }
 
 int remover_cola(Nodo *&frente, Nodo *&fin){
@@ -67,9 +65,7 @@ int remover_cola(Nodo *&frente, Nodo *&fin){
 	Nodo *aux = frente;
 	
 	// Si frente es igual a fin,
-	// es porque solo hay 1 elemento
-	if(frente == fin){
-		frente = NULL;
+	if(frente == NULL){
 		fin = NULL;
 	}
 	else{

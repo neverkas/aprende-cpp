@@ -32,7 +32,7 @@ int main()
     // Conjuntos A, B, C
     // asigno a cada conjunto la cantidad de elementos que tendran
     int A_cardinal = 3, A[A_cardinal] = {0};    
-    int B_cardinal = 2, B[B_cardinal] = {0};    
+    int B_cardinal = 3, B[B_cardinal] = {0};    
     int C_cardinal = 3, C[C_cardinal] = {0};    
     
     // cantidad de combinaciones entre los elementos de los conjuntos A y b
@@ -64,10 +64,14 @@ int main()
     
     int matriz_relacion_A[A_cardinal][B_cardinal];
     for(int i=0; i < A_cardinal; i++){
-        for(int j=0; j < B_cardinal; j++){            
+        for(int j=0; j < B_cardinal; j++){       
+            //printf("(%i;%i) ", A[i], B[j]);
             matriz_relacion_A[i][j] = ((A[i]+B[j]) % 2 == 0);
         }
+        cout << endl;
     }
+
+    cout << endl;
 
     /************************************************************************************/    
     
@@ -141,6 +145,21 @@ void imprimirConjunto(int arr[], int len){
 void crearProductoCartesiano(int AxB[][2], int AxB_cardinal, int A[], int A_cardinal, int B[], int B_cardinal){
     int x = 0; // reutilizo para 1ra componente del par ordenado
     int z = 0; // reutilizo para 2da componente del par ordenado
+    
+    /*
+    for(int i=0; i < AxB_cardinal; i++){
+        for(int j=0; i < 2; j++){
+            AxB[i][j] = (j == 0) ? A[i] : B[i];
+        }
+    }
+    for(int i=0; i < A_cardinal; i++){        
+        for(int j=0; j < B_cardinal; j++){
+            AxB[i][0] = A[i];
+            AxB[i][1] = B[j];
+            //AxB[i][j] = (j == 0) ? A[i] : B[j];
+        }
+    }
+    */
     
     // cantidad de pares ordenados ó cantidad combinaciones posibles entre elementos de A y B
     for(int i=0; i < AxB_cardinal; i++){
