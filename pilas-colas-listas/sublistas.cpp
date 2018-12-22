@@ -71,7 +71,7 @@ void listarEstudiantesPorNombre(estudiantesPorNombre *l);
 //
 // # Variables Globales
 //
-nodoEscuela *LISTA = NULL;
+nodoEscuela *LISTA = NULL; // (opcional, puede usarse como variable local)
 
 //
 // # Main

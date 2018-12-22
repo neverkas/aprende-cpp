@@ -6,8 +6,14 @@
 
 using namespace std;
 
+//
+// # Variables Globales
+//
 #define CANTIDAD_NOTAS 3
 
+//
+// # Structs
+//
 struct Alumno{
     int dni;
     string nombre;
@@ -20,6 +26,40 @@ struct Nodo{
     Nodo *sig;
 };
 
+//
+// # Prototipos
+//
+void mostrarInfo(Alumno a);
+template <typename T> void mostrar(Nodo<T> *p);
+template <typename T> void agregar(Nodo<T> *&p, T v);
+Alumno crearAlumno(int dni, string nombre, int notas[]);
+void asignarNotas(int notas[], int n1, int n2, int n3);
+
+//
+// # Main
+//
+int main(){
+    Nodo<Alumno> *alumnos = NULL;
+    
+    int notas[CANTIDAD_NOTAS];
+
+    asignarNotas(notas, 4,4,7);
+    agregar(alumnos, crearAlumno(35216118, "ramiro", notas));
+
+    asignarNotas(notas, 3,3,5);
+    agregar(alumnos, crearAlumno(34216118, "fede", notas));
+
+    asignarNotas(notas, 2,2,9);
+    agregar(alumnos, crearAlumno(31216218, "pablo", notas));
+
+    mostrar(alumnos);
+
+    return 0;
+}
+
+//
+// # Funciones
+//
 void mostrarInfo(Alumno a){
     cout << "DNI: " << a.dni;
     cout << ", NOMBRE: " << a.nombre;
@@ -79,23 +119,4 @@ void asignarNotas(int notas[], int n1, int n2, int n3){
     notas[0] = n1;
     notas[1] = n2;
     notas[2] = n3;
-}
-
-int main(){
-    Nodo<Alumno> *alumnos = NULL;
-    
-    int notas[CANTIDAD_NOTAS];
-
-    asignarNotas(notas, 4,4,7);
-    agregar(alumnos, crearAlumno(35216118, "ramiro", notas));
-
-    asignarNotas(notas, 3,3,5);
-    agregar(alumnos, crearAlumno(34216118, "fede", notas));
-
-    asignarNotas(notas, 2,2,9);
-    agregar(alumnos, crearAlumno(31216218, "pablo", notas));
-
-    mostrar(alumnos);
-
-    return 0;
 }

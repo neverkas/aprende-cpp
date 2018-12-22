@@ -6,25 +6,24 @@
 
 using namespace std;
 
+//
+// # Structs
+//
 struct Alumno{
     int legajo;
     string nombre;
     int nota;
 };
 
-Alumno crearAlumno(int legajo, string nombre, int nota){
-    Alumno a;
-    a.legajo = legajo;
-    a.nombre = nombre;
-    a.nota = nota;
+//
+// # Prototipos
+//
+Alumno crearAlumno(int legajo, string nombre, int nota);
+void mostrarAlumno(Alumno a);
 
-    return a;
-}
-
-void mostrarAlumno(Alumno a){
-    cout << a.nombre << endl;
-}
-
+//
+// # Main
+//
 int main(){
     Alumno alumnos[3];
     alumnos[0] = crearAlumno(01, "Carlos", 10);
@@ -36,4 +35,20 @@ int main(){
     }
 
     return 0;
+}
+
+//
+// # Funciones
+//
+Alumno crearAlumno(int legajo, string nombre, int nota){
+    Alumno a;
+    a.legajo = legajo;
+    a.nombre = nombre;
+    a.nota = nota;
+
+    return a;
+}
+
+void mostrarAlumno(Alumno a){
+    cout << a.nombre << endl;
 }
