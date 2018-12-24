@@ -12,20 +12,36 @@
 
 using namespace std;
 
+void generarMatrizCuadrada(int tam);
+
 int main(){
 	int filas_columnas;
 
 	cout << "Filas y Columnas a mostrar: ";
 	cin >> filas_columnas;
 
-
-	for(int fila=1; fila <= filas_columnas; fila++){
-		for(int columna=1; columna <= filas_columnas; columna++){
-			cout << 1 << " ";
-		}
-
-		cout << "\n";
-	}
+	generarMatrizCuadrada(filas_columnas);
 	
 	return 0;
+}
+
+void generarMatrizCuadrada(int tam){
+	// defino la matriz
+	int matriz[tam][tam];
+
+	// cargo los datos en la matriz
+	for(int fila=0; fila < tam; fila++){
+		for(int columna=0; columna < tam; columna++){
+			matriz[fila][columna] = 1;
+		}
+	}
+
+	// imprimo la matriz
+	for(int fila=0; fila < tam; fila++){
+		for(int columna=0; columna < tam; columna++){
+			cout << matriz[fila][columna] << " ";
+		}
+		cout << endl;
+	}
+
 }

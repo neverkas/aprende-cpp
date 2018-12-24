@@ -91,11 +91,6 @@ int ordenar(int lista[], int longitud){
 			lista[pos] = lista[pos-1];
 			pos--;
 		}
-		/*
-		for(pos=i; lista[pos-1]>aux && pos > 0; pos--){
-			lista[pos] = lista[pos-1];
-		}
-		*/
 		
 		lista[pos] = aux;
 	}    

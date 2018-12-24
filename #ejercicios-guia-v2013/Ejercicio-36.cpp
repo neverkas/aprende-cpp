@@ -35,6 +35,7 @@ struct Vuelo{
 	int numero;
 	string destino;
 	int cantidadAsientos;
+	int cantidadPasajeros;
 	struct Pasajero pasajeros[MAX_PASAJEROS]; // vector
 };
 
@@ -52,11 +53,13 @@ int main(){
 	// Utilizadas para calculos
 	float vueloTotalRecaudado = 0;
 	float vueloPorcentajeAsientosLibres;
+	float vueloAsientosLibres;
 	float vueloPorcentajeAsientosOcupados;
 	float totalRecaudadoPorMes = 0;
 	int cantidadVuelosCompletos = 0;
 	int numeroVueloRecaudoMas = 0;
-	
+	float importeVueloMasRecaudado = 0;
+
 	/********************************************************************************************/
 	
 	//
@@ -88,7 +91,9 @@ int main(){
 			cin >> vuelo.destino;
 			cout << "Cantidad de asientos: ";
 			cin >> vuelo.cantidadAsientos;
-
+			// Preasigno valor cero a 'cantidadPasajeros' para acumular +1 por cada pasajero que se agregue
+            vuelo.cantidadPasajeros = 0;
+            
 			// Condiciones para la ejecucion del bucle
 			// 1. Si el centinela 'finalizar' del tipo booleano es verdadero
 			// 2. Si el incremental 'j' es menor a cantidadAsientos
@@ -114,8 +119,10 @@ int main(){
 					// Luego de cargada toda la informacion a 'pasajero',
 					// lo agrego al vector 'pasajeros' del registro Vuelo
 					vuelo.pasajeros[j] = pasajero;
+					
+					vuelo.cantidadPasajeros++;
 				} // end if
-            
+				
 				cout << "\t--------------------------" << endl;
 			} // end for
 			
@@ -128,11 +135,11 @@ int main(){
 	} // end if
 	
 	/********************************************************************************************/
-
 	//
 	// # Datos de Salida
 	//
     
+	// 1er bucle for
 	for(int i=0; i < cantidadDeVuelos; i++){
 	    Vuelo vuelo = vuelos[i];
 	    
@@ -141,18 +148,38 @@ int main(){
 		// Utilizo setw() para separar los datos y mostrarlos en dos columnas
 		cout << "Nro pasaporte:" << setw(10) << "Importe en U$S" << endl;
 		
-		for(int j=0; j < vuelo.cantidadAsientos; j++){
+		// 2do bucle for
+		for(int j=0; j < vuelo.cantidadPasajeros; j++){
 		    Pasajero pasajero = vuelo.pasajeros[j];
 				
-				// Utilizo setw() para separar los datos y mostrarlos en dos columnas
+			// Utilizo setw() para separar los datos y mostrarlos en dos columnas
 		    cout << pasajero.pasaporte << setw(10) << pasajero.importe << endl;
 				
-				vueloTotalRecaudado += pasajero.importe;
+			vueloTotalRecaudado += pasajero.importe;
 		} // end for
+        
+        // por cada iteracion del 1er bucle acumulo en 'totalRecaudadoPorMes' el valor del 
+        // 2do bucle for de 'vueloTotalRecaudado'
+        totalRecaudadoPorMes += vueloTotalRecaudado;
+        
+        vueloAsientosLibres = (vuelo.cantidadAsientos - vuelo.cantidadPasajeros);
+		vueloPorcentajeAsientosLibres = ( vueloAsientosLibres / vuelo.cantidadAsientos) * 100;
+		vueloPorcentajeAsientosOcupados = (vuelo.cantidadPasajeros / vuelo.cantidadAsientos) * 100;
+        
+        // Determino si la cantidad total de asientos 		
+		if(vueloAsientosLibres == 0 && vuelo.cantidadPasajeros == vuelo.cantidadAsientos){
+		    // acumulo +1 en 'cantidadVuelosCompletos' si se cumple
+		    cantidadVuelosCompletos++;
+		}
+		
+		// Determino si el importe del vuelo actual es mayor a otro anterior
+		if(vueloTotalRecaudado > importeVueloMasRecaudado){
+		    numeroVueloRecaudoMas = vuelo.numero;
+		}
 		
 		cout << "Total recaudado del vuelo: " << vueloTotalRecaudado  << endl;
-		cout << "% de Asientos libres del vuelo: " << vueloPorcentajeAsientosLibres  << endl;
-		cout << "% de Asientos Ocupados del vuelo: " << vueloPorcentajeAsientosOcupados << endl;					
+		cout << "% de Asientos libres del vuelo: " << vueloPorcentajeAsientosLibres  << "%" << endl;
+		cout << "% de Asientos Ocupados del vuelo: " << vueloPorcentajeAsientosOcupados << "%" << endl;					
 		cout << "------------------------------------------" << endl;
 	} // end for
 
