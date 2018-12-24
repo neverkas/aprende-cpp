@@ -46,23 +46,22 @@ Cada desarrollador tiene preferencias por un editor diferente, será cuestión d
 ----
 
 ### Sitios recomendados para aprender C++
-#### Documentación
-**En Inglés**
-
+#### Documentación ( en inglés)
 La documentación es necesaria en caso de necesitar saber el comportamiento de una función de biblioteca propia del lenguaje. Como puede presentarse la necesidad de entender como se utiliza c_str() ó fopen(), etc.. Además mencionan que bibliotecas necesitarás incluir en la cabecera del archivo.
 + [C++](http://www.cplusplus.com/reference/)
 + [Cpp reference](https://en.cppreference.com/)
 
 #### Tutoriales
-**En Español**
-+ [TutorialesProgramacionYa](https://www.tutorialesprogramacionya.com/cmasmasya/)
-+ [Conclase](http://c.conclase.net/)
-+ [ProgramarYa](https://www.programarya.com/Cursos/C++)
-**En Inglés**
-+ [C++ Tutorial](http://www.cplusplus.com/doc/tutorial/)
-+ [Learn Cpp](https://www.learn-cpp.org/)
-+ [Learn Cpp](https://www.learncpp.com/)
-+ [Tutorials Point](https://www.tutorialspoint.com/cplusplus/)
++ **En Español**
+  + [TutorialesProgramacionYa](https://www.tutorialesprogramacionya.com/cmasmasya/)
+  + [Conclase](http://c.conclase.net/)
+  + [ProgramarYa](https://www.programarya.com/Cursos/C++)
+
++ **En Inglés**
+  + [C++ Tutorial](http://www.cplusplus.com/doc/tutorial/)
+  + [Learn Cpp](https://www.learn-cpp.org/)
+  + [Learn Cpp](https://www.learncpp.com/)
+  + [Tutorials Point](https://www.tutorialspoint.com/cplusplus/)
 
 ### Videotutoriales
 Algunos canales de youtube que considero que son los mejores para aprender
